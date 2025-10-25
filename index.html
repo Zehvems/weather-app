@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Weather App — MVP</title>
+    <style>
+      :root {
+        font-family: system-ui, Arial, sans-serif;
+        line-height: 1.4;
+      }
+      body {
+        margin: 0;
+        background: #0b0d10;
+        color: #e8eef2;
+        display: grid;
+        place-items: center;
+        min-height: 100vh;
+      }
+      .container {
+        width: min(720px, 92%);
+      }
+      h1 {
+        margin: 16px 0 12px;
+        font-size: 1.4rem;
+        font-weight: 600;
+      }
+      form {
+        display: flex;
+        gap: 8px;
+        margin: 8px 0 16px;
+      }
+      input[type="text"] {
+        flex: 1;
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid #24303a;
+        background: #11161b;
+        color: #e8eef2;
+      }
+      button {
+        padding: 10px 14px;
+        border: 0;
+        border-radius: 10px;
+        background: #2b89ff;
+        color: white;
+        cursor: pointer;
+      }
+      button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+      #root {
+        background: #0f1419;
+        border: 1px solid #1f2a35;
+        border-radius: 12px;
+        padding: 16px;
+        min-height: 84px;
+      }
+      .muted {
+        color: #9fb0bf;
+        font-size: 0.9rem;
+      }
+      .error {
+        color: #ff6b6b;
+      }
+      .loading {
+        opacity: 0.85;
+      }
+      footer {
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>Ta aplikacja wymaga JavaScript.</noscript>
+
+    <div class="container">
+      <h1>Weather App — MVP</h1>
+
+      <form id="searchForm" autocomplete="off">
+        <input
+          id="cityInput"
+          type="text"
+          placeholder="City…"
+          aria-label="City"
+        />
+        <button id="getBtn" type="submit">Get</button>
+      </form>
+
+      <div id="root" class="muted">Wpisz miasto i kliknij „Get”.</div>
+
+      <footer class="muted">
+        Demo: fetch • async/await • error handling • DOM
+      </footer>
+    </div>
+
+    <script src="./src/api.js" defer></script>
+    <script src="./src/ui.js" defer></script>
+    <script src="./src/app.js" defer></script>
+  </body>
+</html>
