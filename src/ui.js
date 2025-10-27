@@ -1,12 +1,11 @@
-const root = document.getElementById("root");
-export function renderloading() {
+export function renderLoading(root) {
   root.textContent = "Loading...";
 }
-export function renderError(err) {
+export function renderError(root, err) {
   root.textContent = `Error: ${err}`;
 }
-export function createRaport(data) {
+export function createRaport(root, data) {
   root.innerHTML = `<h2>Poznań</h2><br>
-                    <p>Temperature:${data.temp}°C</p>
-                    <p>Wind:${data.wind}km/h</p> `;
+                    <p>Temperature:${data.temperature}°C</p>
+                    <p>Wind:${data.windspeed}km/h</p> `;
 }
