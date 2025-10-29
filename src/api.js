@@ -1,8 +1,33 @@
-export async function getWeather() {
-  const url =
-    "https://api.open-meteo.com/v1/forecast?latitude=52.41&longitude=16.93&current_weather=true";
+// Ficzer: dynamiczne miasto z geokodowania.
+// Użyj Open-Meteo Geocoding API →
+// https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1
+// Cel bloku:
+// dodać getCoords(city) w api.js,
+// w app.js wywołać ją przed getWeather,
+// wyświetlić nazwę miasta i pogodę.
+// Bez styli, bez cache.
+// Commit po bloku:
+// feat: geocode city → weather data flow
+
+export async function getCoords(city) {
+  const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(
+    city
+  )}&count=5&language=pl`;
+  const data = await dataFetch(url);
+  const place = data.results?.[0];
+  if (!place) throw new Error("Nie znaleziono miasta");
+  const { name, latitude, longitude } = place;
+  return { name, latitude, longitude };
+}
+
+export async function getWeather(lat, lon) {
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`;
+  const { current_weather } = await dataFetch(url);
+  return current_weather;
+}
+async function dataFetch(url) {
   const res = await fetch(url);
   if (!res.ok) throw new Error("Błąd sieci.");
-  const { current_weather } = await res.json();
-  return current_weather;
+  const data = await res.json();
+  return data;
 }

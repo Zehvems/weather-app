@@ -1,4 +1,4 @@
-import { getWeather } from "./api.js";
+import { getWeather, getCoords } from "./api.js";
 import { renderLoading, renderError, createRaport } from "./ui.js";
 const root = document.getElementById("root");
 const form = document.getElementById("searchForm");
@@ -17,9 +17,11 @@ form.addEventListener("submit", async (e) => {
   renderLoading(root);
 
   try {
-    const weather = await getWeather();
+    const { name, latitude, longitude } = await getCoords(city);
+    const weather = await getWeather(latitude, longitude);
+    console.log(name, latitude, longitude);
     console.log("DATA:", weather);
-    createRaport(root, weather);
+    createRaport(root, { city: name, ...weather });
   } catch (err) {
     renderError(root, err);
   } finally {
