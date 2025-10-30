@@ -1,19 +1,9 @@
-// Ficzer: dynamiczne miasto z geokodowania.
-// Użyj Open-Meteo Geocoding API →
-// https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1
-// Cel bloku:
-// dodać getCoords(city) w api.js,
-// w app.js wywołać ją przed getWeather,
-// wyświetlić nazwę miasta i pogodę.
-// Bez styli, bez cache.
-// Commit po bloku:
-// feat: geocode city → weather data flow
-
 export async function getCoords(city) {
   const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(
     city
-  )}&count=5&language=pl`;
+  )}&count=10&language=pl`;
   const data = await dataFetch(url);
+  console.log(data);
   const place = data.results?.[0];
   if (!place) throw new Error("Nie znaleziono miasta");
   const { name, latitude, longitude } = place;
