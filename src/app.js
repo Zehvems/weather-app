@@ -3,8 +3,10 @@ import { renderLoading, renderError, createRaport } from "./ui.js";
 const root = document.getElementById("root");
 const form = document.getElementById("searchForm");
 const cityInput = document.getElementById("cityInput");
+const submitBtn = document.querySelector("#searchForm button");
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
+  root.innerHTML = "";
   const city = cityInput.value.trim();
   if (city === "") {
     renderError(root, "Podaj miasto");
@@ -21,9 +23,14 @@ form.addEventListener("submit", async (e) => {
     const weather = await getWeather(latitude, longitude);
     console.log(name, latitude, longitude);
     console.log("DATA:", weather);
-    createRaport(root, { city: name, ...weather });
+    const history = JSON.parse(localStorage.getItem("history")) ?? [];
+    localStorage.setItem("history", JSON.stringify(history));
+
+    createRaport(root, { city: name, ...weather, history });
+    if (!history.includes(city)) history.push(city);
+    localStorage.setItem("history", JSON.stringify(history));
   } catch (err) {
-    renderError(root, err);
+    renderError(root, err.message);
   } finally {
     root.classList.remove("loading");
   }

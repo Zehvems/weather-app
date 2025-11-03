@@ -5,12 +5,13 @@ import { wmo } from "./utils.js";
 export function renderLoading(root) {
   root.textContent = "Loading...";
 }
-export function renderError(root, err) {
-  root.textContent = `Error: ${err}`;
+export function renderError(root, msg) {
+  root.innerHTML = `<p class="error">⚠️ ${msg}</p>`;
 }
+
 export function createRaport(
   root,
-  { city, temperature, windspeed, weathercode }
+  { city, temperature, windspeed, weathercode, history = [] }
 ) {
   const info = wmo(weathercode);
 
@@ -19,5 +20,6 @@ export function createRaport(
   <p>${info.e} ${info.t} (code ${weathercode})</p>
   <p>🌡️ Temperature: ${temperature}°C</p>
   <p>💨 Wind: ${windspeed} km/h</p>
+  <p>Historia: ${history.join(", ")}</p>
 `;
 }
