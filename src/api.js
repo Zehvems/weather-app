@@ -5,9 +5,10 @@ export async function getCoords(city, lang = "pl") {
   const data = await dataFetch(url);
   console.log(data);
   const place = data.results?.[0];
+  console.log(place);
   if (!place) throw new Error("Nie znaleziono miasta");
-  const { name, latitude, longitude } = place;
-  return { name, latitude, longitude };
+  const { name, latitude, longitude, admin1, country_code } = place;
+  return { name, latitude, longitude, region: admin1, country: country_code };
 }
 
 export async function getWeather(lat, lon) {
