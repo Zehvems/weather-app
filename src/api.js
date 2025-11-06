@@ -1,7 +1,7 @@
-export async function getCoords(city) {
+export async function getCoords(city, lang = "pl") {
   const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(
     city
-  )}&count=10&language=pl`;
+  )}&count=10&language=${lang}`;
   const data = await dataFetch(url);
   console.log(data);
   const place = data.results?.[0];

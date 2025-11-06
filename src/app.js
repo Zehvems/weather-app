@@ -4,8 +4,19 @@ const root = document.getElementById("root");
 const form = document.getElementById("searchForm");
 const cityInput = document.getElementById("cityInput");
 const submitBtn = document.querySelector("#searchForm button");
+const langSelect = document.getElementById("langSelect");
+
+//język
+let langValue = JSON.parse(localStorage.getItem("ln")) ?? "pl";
+langSelect.value = langValue;
+langSelect.addEventListener("change", () => {
+  langValue = langSelect.value;
+  localStorage.setItem("ln", JSON.stringify(langValue));
+});
+//Wyszukiwanie
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
+  console.log(langValue);
   root.innerHTML = "";
   const city = cityInput.value.trim();
   if (city === "") {
@@ -17,9 +28,8 @@ form.addEventListener("submit", async (e) => {
   cityInput.placeholder = city;
   root.classList.add("loading");
   renderLoading(root);
-
   try {
-    const { name, latitude, longitude } = await getCoords(city);
+    const { name, latitude, longitude } = await getCoords(city, langValue);
     const weather = await getWeather(latitude, longitude);
     console.log(name, latitude, longitude);
     console.log("DATA:", weather);
